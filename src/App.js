@@ -5,20 +5,18 @@ import { Home } from "./pages/Home";
 import { LiveClasses } from './pages/LiveClasses';
 import { RecordedClasses } from './pages/RecordedClasses';
 import { TakeTest } from './pages/TakeTest';
-import Hero from './components/Hero';
 
 function App() {
   return (
     
     <BrowserRouter>
       <Routes>
-       <Route path="/" element={<Home/>}/>
-       <Route path="/courses" element={<Courses/>}/>
-       <Route path='/liveClasses' element={<LiveClasses/>}/>
-       <Route path='/recordedClasses' element={<RecordedClasses/>}/>
-       <Route path='/takeTest' element={<TakeTest/>}/>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/courses" element={<Courses/>}/>
+        <Route path='/liveClasses' element={<LiveClasses/>}/>
+        <Route path='/recordedClasses' element={<RecordedClasses/>}/>
+        <Route path='/takeTest' element={<TakeTest/>}/>
       </Routes>
-      <Hero/>
     </BrowserRouter>
     
   );

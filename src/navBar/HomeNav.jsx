@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function HomeNav() {
   return (
-  <div className='bg-[#091f35] h-[81px] shadow-lg'>
+  <div className='bg-[#EFF7FF] h-[81px] shadow-lg'>
   <div className='flex justify-between p-5'>
 
     <div>

@@ -1,9 +1,9 @@
-import React from 'react'
-import HomeNav from '../navBar/HomeNav'
+import React from 'react';
+import HomeNav from '../navBar/HomeNav';
 
 export const Home = () => {
   return (
-    <div>
+    <div className="bg-[#EFF7FF] h-screen">
       <HomeNav />
     </div>
   )
