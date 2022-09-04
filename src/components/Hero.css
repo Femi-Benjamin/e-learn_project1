@@ -1,0 +1,10 @@
+.shadow{
+    position: absolute;
+width: 318px;
+height: 318px;
+left: 2px;
+top: 109px;
+
+background: #CFEDFF;
+filter: blur(80px);
+}
