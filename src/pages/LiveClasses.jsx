@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
+import HomeNav from '../navBar/HomeNav';
 
 export const LiveClasses = () => {
   return (
-    <div>LiveClasses</div>
+    <div>
+      <HomeNav />
+    </div>
   )
 }

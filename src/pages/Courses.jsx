@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
+import HomeNav from '../navBar/HomeNav';
 
 export const Courses= () => {
   return (
-    <div>Courses</div>
+    <div>
+      <HomeNav />
+    </div>
   )
 }

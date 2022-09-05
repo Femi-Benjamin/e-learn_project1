@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import HomeNav from '../navBar/HomeNav'
 import img from "../img/Group.png"
-import imgi from "../imgi/Ellipse7.png"
-import shadow from "../shadow/Ellipse2.png"
+import imgi from "../imgi/Ellipse7.png";
 import Sidebar from '../components/Sidebar';
 import Card from '../components/Card';
 import Learn from "../components/Learn";
 import Joinus from "../components/Joinus";
 import Footer from "../components/Footer";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export const Home = () => {
+  useEffect(() => {
+    
+  }, [])
+  
   return (
     <div className="bg-[#EFF7FF] h-auto w-auto">
       <HomeNav />
       <img className='absolute' src={imgi} alt="" />
-      <img className='absolute left-[1200px]' src={shadow} alt="" />
       <div className='flex justify-evenly'>
         <div className='not-italic font-semibold text-6xl mt-[160px] ml-[100px] text-[#082183] leading-[104px] z-50'>
           <h1>Get Quality <span className='font-bold'> Tutoring <br /> Through 1-on-1</span> <br />Online Tutoring</h1>
