@@ -6,7 +6,7 @@ export const RecordedClasses = () => {
     <div className='bg-[#EFF7FF] h-auto w-auto'>
       <HomeNav />
       <div className='text-center m-10'>
-        <h1 className='font-extrabold text-[40px] text-[#082183]'>Assessment History</h1>
+        <h1 className='font-extrabold text-[40px] text-[#082183] not-italic'>Assessment History</h1>
         <h1 className='font-bold text-[#082183]'>Here you will find your weekly quiz scores</h1>
       </div>
 
