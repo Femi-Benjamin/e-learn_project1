@@ -3,7 +3,7 @@ import React from 'react'
 export default function Footer() {
   return (
     <div className='bg-[#0D0C42] h-[269px] mt-[119px]'>
-    <div className='grid grid-cols-3 text-white p-[50px] text-center'>
+    <div className='grid grid-cols-3 text-white p-[50px] text-center place-items-center'>
           <div>
               <h1 className='p-7 '>
               Ⓒ Copyright 2022 by Ritman University
