@@ -3,7 +3,7 @@ import React from "react";
 export default function Joinus() {
   return (
     <div className="flex items-center justify-center">
-      <div className="bg-[#EFF7FF] py-6 md:py-10 lg:py-20 md:px-0 px-5">
+      <div className="bg-[#EFF7FF] py-12 md:py-10 lg:py-20 md:px-0 px-5">
         <div className="text-center not-italic font-bold text-2xl md:text-4xl lg:text-5xl leading-[2.5rem] md:leading-[4rem] lg:leading-[4.5rem] text-[#082183] pt- capitalize">
           <h1>
             Join us and scale up your IQ, <br /> friends, and family

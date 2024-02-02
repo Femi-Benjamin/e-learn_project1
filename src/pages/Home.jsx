@@ -42,7 +42,7 @@ export const Home = () => {
             <h1 className='font-semibold text-[24px] leading-[36px] text-[#FFFFFF]'>Join for free</h1>
           </button>
         </div>
-        <div className='h-full'>
+        <div className='h-full lg:block hidden'>
           <img className='absolute' src={imgi} alt="" />
         </div>
         <div className='pt-16 lg:pt-0 z-50'>
