@@ -7,7 +7,7 @@ export default function sidebar() {
   return (
     <>
       <div className="flex justify-end">
-        <div className="flex md:flex-row flex-col justify-evenly items-center lg:p-20 p-5 md:w-[1130px] w-full md:text-left text-center bg-white shadow-2xl md:rounded-tl-3xl md:rounded-bl-3xl mt-[88px]">
+        <div className="flex md:flex-row flex-col justify-evenly items-center lg:p-20 p-5 md:w-[1130px] w-full md:text-left text-center bg-white shadow-xl md:rounded-tl-3xl md:rounded-bl-3xl mt-[88px]">
           <h1 className=" md:text-[40px] text-2xl leading-10 not-italic text-[#082183] font-bold pb-3">
             Over 500 plus <br/> courses in one place
           </h1>

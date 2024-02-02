@@ -25,15 +25,15 @@ export const Home = () => {
       <div className='flex flex-col lg:flex-row justify-around items-center lg:items-stretch md:px-0 px-5 lg:pt-32'>
         <div className='lg:text-left text-center items-center z-50'>
           <h1 className='text-4xl lg:text-6xl pt-8 lg:pt-0 text-[#082183] lg:leading-[105px] leading-normal'>
-            Get Quality <span className='font-bold'> Tutoring <br /> Through 1-on-1</span> <br /> 
+            Get Quality <span className='font-bold'> Tutoring <br /> Through 1-on-1</span> <br />
             <Typewriter
-						options={{
-							strings: ['Online Tutoring'],
-							autoStart: true,
-							loop: true,
-							delay: 200,
-						}}
-					/> 
+              options={{
+                strings: ['Online Tutoring'],
+                autoStart: true,
+                loop: true,
+                delay: 200,
+              }}
+            />
           </h1>
           <h1 className='pt-4 lg:pt-8 text-[#082183] leading-8 text-xl lg:text-lg not-italic font-medium'>
             Private, 1-on-1 lessons with experts, instructor-based learning in the field of interest
