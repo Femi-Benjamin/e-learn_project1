@@ -33,8 +33,8 @@ const Navbar = ({ onOpenModal }) => {
                         </svg>
                     </button>
                 </div>
-                <div className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${isOpen ? 'block' : 'hidden'}`} id="navbar-sticky">
-                    <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
+                <div className={`items-center justify-between w-full md:flex md:w-auto md:order-1 md:absolute md:left-1/2 md:-translate-x-1/2 ${isOpen ? 'block' : 'hidden'}`} id="navbar-sticky">
+                    <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white items-center">
                         <li>
                             <Link to="/" className="block py-2 pl-3 pr-4 text-white bg-primary rounded md:bg-transparent md:text-primary md:p-0" aria-current="page">Home</Link>
                         </li>
@@ -49,6 +49,9 @@ const Navbar = ({ onOpenModal }) => {
                         </li>
                         <li>
                             <Link to="/take-test" className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 transition-colors duration-300">Take Test</Link>
+                        </li>
+                        <li>
+                            <Link to="/admin" className="block py-2 pl-3 pr-4 text-white bg-gray-800 rounded md:bg-gray-800 md:text-white md:px-4 md:py-2 hover:bg-gray-700 transition-colors duration-300">Admin</Link>
                         </li>
                     </ul>
                 </div>
