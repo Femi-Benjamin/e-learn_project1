@@ -1,86 +1,80 @@
-import React, { useEffect } from 'react';
-import HomeNav from '../navBar/HomeNav';
-import img from "../img/Group.png";
-import imgi from "../imgi/Ellipse7.png";
-import Sidebar from '../components/Sidebar';
-import Card from '../components/Card';
-import Learn from "../components/Learn";
-import Joinus from "../components/Joinus";
-import Footer from "../components/Footer";
-import 'aos/dist/aos.css';
-import Typewriter from "typewriter-effect";
-//import AOS from 'aos';
+import React, { useState } from 'react';
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import CourseCard from '../components/CourseCard';
+import Footer from '../components/Footer';
+import VideoSection from '../components/VideoSection';
+import RegistrationModal from '../components/RegistrationModal';
+
+import { courses } from '../data/courses';
 
 export const Home = () => {
-  useEffect(() => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAllCourses, setShowAllCourses] = useState(false);
 
-  }, []);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const visibleCourses = showAllCourses ? courses : courses.slice(0, 3);
 
   return (
-    <div className="bg-[#EFF7FF] h-auto w-auto">
-      <HomeNav />
-      <div className=''>
-        <img className='absolute' src={imgi} alt="" />
-      </div>
-      <div className='flex flex-col lg:flex-row justify-around items-center lg:items-stretch md:px-0 px-5 lg:pt-32'>
-        <div className='lg:text-left text-center items-center z-50'>
-          <h1 className='text-4xl lg:text-6xl pt-8 lg:pt-0 text-[#082183] lg:leading-[105px] leading-normal'>
-            Get Quality <span className='font-bold'> Tutoring <br /> Through 1-on-1</span> <br />
-            <Typewriter
-              options={{
-                strings: ['Online Tutoring'],
-                autoStart: true,
-                loop: true,
-                delay: 200,
-              }}
+    <div className="bg-gray-50 min-h-screen font-sans">
+      <Navbar onOpenModal={openModal} />
+      <Hero onOpenModal={openModal} />
+
+      {/* Featured Courses Section */}
+      <section className="py-16 px-4 mx-auto max-w-screen-xl lg:py-24 lg:px-6">
+        <div className="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
+          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Explore Our Courses</h2>
+          <p className="font-light text-gray-500 lg:mb-16 sm:text-xl">
+            Choose from a wide range of courses designed to help you advance your career and learn new skills.
+          </p>
+        </div>
+        <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2 lg:grid-cols-3">
+          {visibleCourses.map((course, index) => (
+            <CourseCard
+              key={index}
+              title={course.title}
+              category={course.category}
+              image={course.image}
+              color={course.color}
             />
-          </h1>
-          <h1 className='pt-4 lg:pt-8 text-[#082183] leading-8 text-xl lg:text-lg not-italic font-medium'>
-            Private, 1-on-1 lessons with experts, instructor-based learning in the field of interest
-          </h1>
-          <button className='lg:w-[190px] w-56 h-[53px] bg-[#082183] rounded-[15px] mt-6 lg:mt-8'>
-            <h1 className='font-semibold text-[24px] leading-[36px] text-[#FFFFFF]'>Join for free</h1>
+          ))}
+        </div>
+        <div className="text-center">
+          <button
+            onClick={() => setShowAllCourses(!showAllCourses)}
+            className="text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none transition-colors duration-300"
+          >
+            {showAllCourses ? "See Less" : "See More"}
           </button>
         </div>
-        <div className='h-full lg:block hidden'>
-          <img className='absolute' src={imgi} alt="" />
-        </div>
-        <div className='pt-16 lg:pt-0 z-50'>
-          <img src={img} alt="learn" className='lg:w-auto w-full' />
-        </div>
+      </section>
 
-      </div>
-      <Sidebar />
-      <div className='flex flex-col items-center lg:flex-row justify-center lg:justify-around z-10 py-8 lg:py-[50px] md:gap-5 gap-6'>
-        <div className='hover:animate-bounce z-10'>
-          <Card
-            headerImage="/Line Chart.png"
-            headOne="Cyber"
-            headTwo="Security"
-            backgroundColor="bg-[#4B5FDC]"
-          />
+      <VideoSection />
+
+      {/* Stats / Trust Section */}
+      <section className="bg-white py-12">
+        <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+          <dl className="grid max-w-screen-md gap-8 mx-auto text-gray-900 sm:grid-cols-3">
+            <div className="flex flex-col items-center justify-center">
+              <dt className="mb-2 text-3xl md:text-4xl font-extrabold">10k+</dt>
+              <dd className="font-light text-gray-500">Students</dd>
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <dt className="mb-2 text-3xl md:text-4xl font-extrabold">50+</dt>
+              <dd className="font-light text-gray-500">Mentors</dd>
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <dt className="mb-2 text-3xl md:text-4xl font-extrabold">100+</dt>
+              <dd className="font-light text-gray-500">Courses</dd>
+            </div>
+          </dl>
         </div>
-        <div className='hover:animate-bounce z-10'>
-          <Card
-            headerImage="/Vector (1).png"
-            headOne="Business"
-            headTwo="Management"
-            backgroundColor="bg-[#4EC5F8]"
-          />
-        </div>
-        <div className='hover:animate-bounce z-10'>
-          <Card
-            headerImage="Vector (2).png"
-            headOne="Data"
-            headTwo="Analytics"
-            backgroundColor="bg-[#082183]"
-          />
-        </div>
-      </div>
-      <Learn />
-      <Joinus />
-      <Footer />
+      </section>
+
+      <Footer onOpenModal={openModal} />
+      <RegistrationModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };
-
