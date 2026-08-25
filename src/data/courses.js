@@ -1,50 +1,528 @@
-export const courses = [
-    {
-        title: "Cyber Security",
-        category: "Security",
-        image: "/Line Chart.png",
-        color: "bg-blue-600"
+export const initialCourses = [
+  {
+    id: "cs-101",
+    title: "Cyber Security & Ethical Hacking Masterclass",
+    category: "Security",
+    level: "Intermediate",
+    duration: "12 Weeks",
+    lessonsCount: 48,
+    rating: 4.9,
+    reviewsCount: 1240,
+    studentsEnrolled: 8430,
+    price: 89.99,
+    originalPrice: 149.99,
+    badge: "Bestseller",
+    instructor: {
+      name: "Dr. Marcus Vance",
+      role: "Chief InfoSec Specialist",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
     },
-    {
-        title: "Business Management",
-        category: "Business",
-        image: "/Vector (1).png",
-        color: "bg-sky-400"
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80",
+    color: "from-blue-600 to-indigo-700",
+    accentColor: "blue",
+    description: "Master modern penetration testing, network defense, threat intelligence, and zero-trust security architecture from scratch.",
+    modules: [
+      { title: "Network Architecture & Packet Analysis with Wireshark", duration: "2h 40m" },
+      { title: "Vulnerability Assessment & Metasploit Framework", duration: "3h 15m" },
+      { title: "Web Application Security (OWASP Top 10)", duration: "4h 00m" },
+      { title: "Cryptographic Protocols & Defense In Depth", duration: "2h 50m" }
+    ],
+    featured: true,
+  },
+  {
+    id: "web-201",
+    title: "Full-Stack Web Engineering with React & Node.js",
+    category: "Development",
+    level: "All Levels",
+    duration: "10 Weeks",
+    lessonsCount: 64,
+    rating: 4.95,
+    reviewsCount: 2890,
+    studentsEnrolled: 15420,
+    price: 94.99,
+    originalPrice: 169.99,
+    badge: "Trending",
+    instructor: {
+      name: "Elena Rostova",
+      role: "Principal Frontend Architect",
+      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80",
     },
-    {
-        title: "Data Analytics",
-        category: "Data",
-        image: "/Vector (2).png",
-        color: "bg-indigo-800"
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80",
+    color: "from-purple-600 to-indigo-800",
+    accentColor: "purple",
+    description: "Build robust, scalable enterprise web applications with TypeScript, React 18, Tailwind, Node.js, and Cloud deployments.",
+    modules: [
+      { title: "Modern TypeScript & Advanced Component Patterns", duration: "3h 20m" },
+      { title: "State Management & Server Synchronization", duration: "4h 10m" },
+      { title: "REST & GraphQL API Engineering with Express", duration: "3h 45m" },
+      { title: "CI/CD Pipelines, Testing & Containerized Cloud Deployment", duration: "2h 30m" }
+    ],
+    featured: true,
+  },
+  {
+    id: "ai-301",
+    title: "Applied Machine Learning & Generative AI Systems",
+    category: "AI",
+    level: "Advanced",
+    duration: "14 Weeks",
+    lessonsCount: 52,
+    rating: 4.88,
+    reviewsCount: 940,
+    studentsEnrolled: 6180,
+    price: 119.99,
+    originalPrice: 199.99,
+    badge: "Hot",
+    instructor: {
+      name: "David Chen, Ph.D.",
+      role: "AI Research Scientist",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
     },
-    {
-        title: "Web Development",
-        category: "Development",
-        image: "https://cdn-icons-png.flaticon.com/512/1005/1005141.png",
-        color: "bg-purple-600"
+    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&auto=format&fit=crop&q=80",
+    color: "from-emerald-600 to-teal-800",
+    accentColor: "emerald",
+    description: "Hands-on neural networks, PyTorch, LLM fine-tuning, RAG pipelines, and vector database deployments for real-world products.",
+    modules: [
+      { title: "Deep Learning Foundations & PyTorch Workflows", duration: "4h 15m" },
+      { title: "Transformer Architectures & Attention Mechanisms", duration: "3h 50m" },
+      { title: "Building Production RAG Systems with Vector DBs", duration: "4h 30m" },
+      { title: "Model Optimization, Quantization & Edge Inference", duration: "3h 10m" }
+    ],
+    featured: true,
+  },
+  {
+    id: "cs-core-100",
+    title: "Computer Science & Systems Architecture: Algorithms to OS",
+    category: "Computer Science",
+    level: "All Levels",
+    duration: "12 Weeks",
+    lessonsCount: 56,
+    rating: 4.97,
+    reviewsCount: 2450,
+    studentsEnrolled: 14800,
+    price: 92.99,
+    originalPrice: 169.99,
+    badge: "Core Mastery",
+    instructor: {
+      name: "Prof. Jonathan Sterling",
+      role: "Distinguished Systems Scientist",
+      avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80",
     },
-    {
-        title: "Digital Marketing",
-        category: "Marketing",
-        image: "https://cdn-icons-png.flaticon.com/512/1998/1998087.png",
-        color: "bg-pink-500"
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80",
+    color: "from-indigo-600 to-blue-900",
+    accentColor: "indigo",
+    description: "Master foundational computer science: Big-O algorithmic complexity, memory management in C/Rust, CPU caching, concurrency, and distributed systems.",
+    modules: [
+      { title: "Algorithmic Analysis, Dynamic Programming & Graph Traversal", duration: "4h 20m" },
+      { title: "Computer Architecture, CPU Pipelining & Memory Hierarchies", duration: "3h 45m" },
+      { title: "Operating Systems, POSIX Semantics & Multithreaded Concurrency", duration: "4h 10m" },
+      { title: "Distributed Consensus, Raft Protocols & Network Internals", duration: "3h 30m" }
+    ],
+    featured: true,
+  },
+  {
+    id: "cs-dsa-200",
+    title: "Data Structures & Advanced Algorithms: Master Class",
+    category: "Computer Science",
+    level: "Intermediate",
+    duration: "10 Weeks",
+    lessonsCount: 48,
+    rating: 4.95,
+    reviewsCount: 3120,
+    studentsEnrolled: 18450,
+    price: 84.99,
+    originalPrice: 149.99,
+    badge: "Bestseller",
+    instructor: {
+      name: "Dr. Maya Lin",
+      role: "Ex-Google Principal Algorithm Engineer",
+      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
     },
-    {
-        title: "Graphic Design",
-        category: "Design",
-        image: "https://cdn-icons-png.flaticon.com/512/1256/1256628.png",
-        color: "bg-orange-500"
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80",
+    color: "from-blue-600 to-indigo-900",
+    accentColor: "blue",
+    description: "Conquer complex trees, dynamic programming, Dijkstra graph paths, amortized analysis, and write optimal asymptotic code in C++ & Python.",
+    modules: [
+      { title: "Arrays, Bit Manipulation & Two-Pointer Patterns", duration: "3h 30m" },
+      { title: "Binary Trees, AVL Self-Balancing & Red-Black Trees", duration: "4h 15m" },
+      { title: "Graph Algorithms: Topological Sort, DFS/BFS & Shortest Paths", duration: "4h 45m" },
+      { title: "Dynamic Programming: 1D/2D Memoization & Tabulation Mastery", duration: "5h 00m" }
+    ],
+    featured: true,
+  },
+  {
+    id: "cs-compilers-300",
+    title: "Compilers & Interpreters: Building Languages with Rust",
+    category: "Computer Science",
+    level: "Advanced",
+    duration: "8 Weeks",
+    lessonsCount: 38,
+    rating: 4.93,
+    reviewsCount: 1420,
+    studentsEnrolled: 7600,
+    price: 89.99,
+    originalPrice: 159.99,
+    badge: "Advanced",
+    instructor: {
+      name: "Dr. Julian Foster",
+      role: "Programming Languages Researcher",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
     },
-    {
-        title: "Machine Learning",
-        category: "AI",
-        image: "https://cdn-icons-png.flaticon.com/512/2103/2103633.png",
-        color: "bg-green-600"
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop&q=80",
+    color: "from-violet-600 to-purple-900",
+    accentColor: "purple",
+    description: "Write your own lexer, recursive descent parser, AST generator, type checker, bytecode VM, and LLVM IR code generator from scratch.",
+    modules: [
+      { title: "Lexical Scanning & Regular Expression Automata", duration: "2h 45m" },
+      { title: "Recursive Descent Parsing & Abstract Syntax Trees (AST)", duration: "3h 50m" },
+      { title: "Type Systems, Static Analysis & Symbol Tables", duration: "3h 15m" },
+      { title: "Bytecode Virtual Machines & LLVM JIT Compilation", duration: "4h 10m" }
+    ],
+    featured: false,
+  },
+  {
+    id: "cs-distributed-400",
+    title: "Distributed Systems & Cloud Consensus Architecture",
+    category: "Computer Science",
+    level: "Advanced",
+    duration: "9 Weeks",
+    lessonsCount: 40,
+    rating: 4.98,
+    reviewsCount: 1890,
+    studentsEnrolled: 8920,
+    price: 94.99,
+    originalPrice: 179.99,
+    badge: "High Demand",
+    instructor: {
+      name: "Prof. Vikram Sen",
+      role: "Distributed Infrastructure Architect",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
     },
-    {
-        title: "Cloud Computing",
-        category: "Cloud",
-        image: "https://cdn-icons-png.flaticon.com/512/1161/1161728.png",
-        color: "bg-cyan-600"
-    }
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80",
+    color: "from-slate-700 to-slate-900",
+    accentColor: "slate",
+    description: "Design fault-tolerant distributed databases, master Raft & Paxos consensus protocols, vector clocks, CAP theorem, and event-driven architectures.",
+    modules: [
+      { title: "Network Partitions, Byzantine Faults & Vector Clocks", duration: "3h 20m" },
+      { title: "Consensus Protocols: Raft Election & Log Replication", duration: "4h 05m" },
+      { title: "Distributed Storage: LSM-Trees, WAL & Gossip Protocols", duration: "3h 40m" },
+      { title: "Zero-Downtime Replication & Distributed Transactions", duration: "3h 50m" }
+    ],
+    featured: false,
+  },
+  {
+    id: "data-401",
+    title: "Data Analytics, SQL & PowerBI Business Intelligence",
+    category: "Data",
+    level: "Beginner",
+    duration: "8 Weeks",
+    lessonsCount: 36,
+    rating: 4.82,
+    reviewsCount: 1650,
+    studentsEnrolled: 9840,
+    price: 69.99,
+    originalPrice: 129.99,
+    badge: "Popular",
+    instructor: {
+      name: "Sarah Jenkins",
+      role: "Lead Analytics Consultant",
+      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+    },
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80",
+    color: "from-sky-600 to-blue-800",
+    accentColor: "sky",
+    description: "Transform complex data sets into executive dashboards, master SQL queries, statistical modelling, and automated KPI pipelines.",
+    modules: [
+      { title: "Complex SQL Joins, Aggregations & Window Functions", duration: "3h 10m" },
+      { title: "Data Cleaning & Wrangling with Python & Pandas", duration: "3h 30m" },
+      { title: "Interactive Storytelling with PowerBI & Tableau", duration: "2h 45m" },
+      { title: "Statistical Hypothesis Testing for Business Strategy", duration: "2h 15m" }
+    ],
+    featured: false,
+  },
+  {
+    id: "cloud-501",
+    title: "Cloud Solutions Architecture: AWS & Google Cloud",
+    category: "Cloud",
+    level: "Intermediate",
+    duration: "10 Weeks",
+    lessonsCount: 42,
+    rating: 4.89,
+    reviewsCount: 1120,
+    studentsEnrolled: 7420,
+    price: 99.99,
+    originalPrice: 179.99,
+    badge: "Certified",
+    instructor: {
+      name: "Tariq Mansoor",
+      role: "Cloud Enterprise Architect",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+    },
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80",
+    color: "from-cyan-600 to-blue-700",
+    accentColor: "cyan",
+    description: "Architect highly available, fault-tolerant infrastructure, Kubernetes clusters, serverless APIs, and multi-region resilience.",
+    modules: [
+      { title: "Cloud Infrastructure as Code with Terraform", duration: "3h 40m" },
+      { title: "Docker & Kubernetes Orchestration in Production", duration: "4h 20m" },
+      { title: "Serverless Microservices & Event-Driven Patterns", duration: "3h 15m" },
+      { title: "Cost Optimization, IAM & Cloud Security Compliance", duration: "2h 50m" }
+    ],
+    featured: false,
+  },
+  {
+    id: "des-601",
+    title: "Modern UI/UX Design Systems & Figma Mastery",
+    category: "Design",
+    level: "All Levels",
+    duration: "6 Weeks",
+    lessonsCount: 30,
+    rating: 4.93,
+    reviewsCount: 1890,
+    studentsEnrolled: 11200,
+    price: 79.99,
+    originalPrice: 139.99,
+    badge: "Design Pick",
+    instructor: {
+      name: "Chloe Dupont",
+      role: "Product Design Lead",
+      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
+    },
+    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&auto=format&fit=crop&q=80",
+    color: "from-amber-500 to-orange-600",
+    accentColor: "amber",
+    description: "Craft pixel-perfect user experiences, scalable design tokens, micro-interactions, responsive mobile interfaces, and design systems.",
+    modules: [
+      { title: "User Research, Wireframing & Information Hierarchy", duration: "2h 30m" },
+      { title: "Auto-Layout, Components & Variables in Figma", duration: "3h 45m" },
+      { title: "Building an Atomic Enterprise Design System", duration: "3h 10m" },
+      { title: "Interactive Prototyping & Developer Hand-off", duration: "2h 15m" }
+    ],
+    featured: true,
+  },
+  {
+    id: "biz-701",
+    title: "Strategic Product Management & Agile Leadership",
+    category: "Business",
+    level: "Intermediate",
+    duration: "8 Weeks",
+    lessonsCount: 32,
+    rating: 4.79,
+    reviewsCount: 820,
+    studentsEnrolled: 5310,
+    price: 84.99,
+    originalPrice: 149.99,
+    badge: "Leadership",
+    instructor: {
+      name: "James Thorne",
+      role: "VP of Product",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
+    },
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80",
+    color: "from-rose-600 to-pink-700",
+    accentColor: "rose",
+    description: "Drive product vision from 0 to 1, conduct user interviews, define North Star metrics, master sprint planning, and lead cross-functional teams.",
+    modules: [
+      { title: "Market Validation & Opportunity Scoring", duration: "2h 45m" },
+      { title: "PRDs, User Stories & Roadmapping Strategies", duration: "3h 20m" },
+      { title: "Metrics That Matter: OKRs, CAC, LTV & Retention", duration: "3h 00m" },
+      { title: "Go-to-Market (GTM) Launch & Growth Experiments", duration: "2h 30m" }
+    ],
+    featured: false,
+  },
+  {
+    id: "mkt-801",
+    title: "Growth Marketing & Data-Driven Acquisition",
+    category: "Marketing",
+    level: "Beginner",
+    duration: "6 Weeks",
+    lessonsCount: 28,
+    rating: 4.76,
+    reviewsCount: 710,
+    studentsEnrolled: 4920,
+    price: 59.99,
+    originalPrice: 109.99,
+    badge: "Fast Track",
+    instructor: {
+      name: "Amina Al-Mansoor",
+      role: "Head of Growth",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+    },
+    image: "https://images.unsplash.com/photo-1533750516457-a7f992034fec?w=600&auto=format&fit=crop&q=80",
+    color: "from-violet-600 to-purple-800",
+    accentColor: "violet",
+    description: "Harness paid search, SEO algorithms, viral loops, high-converting funnel copy, and lifecycle email automation to scale revenue.",
+    modules: [
+      { title: "SEO Optimization & High-Intent Keyword Strategy", duration: "2h 20m" },
+      { title: "Performance Paid Ads (Meta, Google & LinkedIn)", duration: "3h 10m" },
+      { title: "Conversion Rate Optimization (CRO) & A/B Testing", duration: "2h 40m" },
+      { title: "Lifecycle Marketing & Retention Automations", duration: "2h 10m" }
+    ],
+    featured: false,
+  }
+];
+
+export const courses = initialCourses;
+
+export const mockLiveSessions = [
+  {
+    id: "live-1",
+    title: "Zero-Day Exploit Mitigation & Live Penetration Demo",
+    course: "Cyber Security & Ethical Hacking",
+    instructor: "Dr. Marcus Vance",
+    instructorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+    status: "LIVE_NOW",
+    attendees: 342,
+    scheduledTime: "Happening Now",
+    duration: "90 min",
+    streamUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    topic: "Live demonstration of buffer overflow protection, memory safety mitigations, and firewall bypass detection.",
+    level: "Advanced"
+  },
+  {
+    id: "live-2",
+    title: "Building Production RAG with LangChain and Llama-3",
+    course: "Applied Machine Learning",
+    instructor: "David Chen, Ph.D.",
+    instructorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+    status: "UPCOMING",
+    attendees: 512,
+    scheduledTime: "Today at 5:00 PM EST",
+    duration: "75 min",
+    streamUrl: "",
+    topic: "Step-by-step vector indexing, hybrid search retrieval, chunking strategies, and re-ranking for ultra-low latency.",
+    level: "Intermediate"
+  },
+  {
+    id: "live-3",
+    title: "Next.js 15 Server Components & Dynamic Caching Strategies",
+    course: "Full-Stack Web Engineering",
+    instructor: "Elena Rostova",
+    instructorAvatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80",
+    status: "UPCOMING",
+    attendees: 789,
+    scheduledTime: "Tomorrow at 2:00 PM EST",
+    duration: "60 min",
+    streamUrl: "",
+    topic: "Deep dive into Suspense boundaries, streaming SSR, PPR (Partial Prerendering), and optimizing Core Web Vitals.",
+    level: "All Levels"
+  }
+];
+
+export const mockRecordedLessons = [
+  {
+    id: "rec-1",
+    title: "1.0 - Foundations of Threat Modeling & Security Posture",
+    course: "Cyber Security & Ethical Hacking Masterclass",
+    instructor: "Dr. Marcus Vance",
+    duration: "28:45",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    thumbnail: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80",
+    views: 14200,
+    uploadedDate: "3 days ago",
+    transcript: "Welcome to module one. In this lecture we break down STRIDE threat modeling, attack surface reduction, and cryptographic boundaries. Security is not a product; it is an ongoing mathematical and operational process...",
+    resources: [
+      { name: "Threat_Modeling_STRIDE_Matrix.pdf", size: "2.4 MB" },
+      { name: "Wireshark_Filter_CheatSheet.txt", size: "45 KB" }
+    ]
+  },
+  {
+    id: "rec-2",
+    title: "2.1 - Advanced React Hooks, Concurrent Mode & Fiber Architecture",
+    course: "Full-Stack Web Engineering with React & Node.js",
+    instructor: "Elena Rostova",
+    duration: "34:10",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    thumbnail: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80",
+    views: 29800,
+    uploadedDate: "1 week ago",
+    transcript: "Understanding how React schedules updates via the Fiber reconciliation tree allows us to build snappy 60fps applications without accidental re-renders or layout thrashing...",
+    resources: [
+      { name: "React_Fiber_Reconciler_Notes.pdf", size: "1.8 MB" },
+      { name: "Starter_Boilerplate_Code.zip", size: "14.2 MB" }
+    ]
+  },
+  {
+    id: "rec-3",
+    title: "3.4 - Fine-Tuning Open-Weights Models with LoRA and QLoRA",
+    course: "Applied Machine Learning & Generative AI Systems",
+    instructor: "David Chen, Ph.D.",
+    duration: "42:15",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    thumbnail: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&auto=format&fit=crop&q=80",
+    views: 8900,
+    uploadedDate: "2 weeks ago",
+    transcript: "In this comprehensive laboratory session, we examine low-rank adaptation matrices to fine-tune 8B parameter models on a single consumer GPU with precision quantization...",
+    resources: [
+      { name: "LoRA_FineTuning_Notebook.ipynb", size: "3.1 MB" },
+      { name: "Synthetic_Dataset_Sample.jsonl", size: "8.5 MB" }
+    ]
+  }
+];
+
+export const mockQuestions = [
+  {
+    id: 1,
+    question: "Which of the following encryption algorithms is an asymmetric public-key cryptosystem widely used for secure key exchanges?",
+    category: "Cyber Security",
+    options: [
+      "AES-256 (Advanced Encryption Standard)",
+      "RSA (Rivest–Shamir–Adleman)",
+      "SHA-3 (Secure Hash Algorithm)",
+      "ChaCha20-Poly1305"
+    ],
+    correctAnswer: 1,
+    explanation: "RSA is an asymmetric (public-key) algorithm, whereas AES is symmetric and SHA-3 is a cryptographic hash function."
+  },
+  {
+    id: 2,
+    question: "In React 18, what is the primary benefit of the `useDeferredValue` hook?",
+    category: "Web Development",
+    options: [
+      "It cancels network requests when a user types quickly.",
+      "It defers updating a non-critical part of the UI to keep input typing responsive.",
+      "It memoizes calculation outputs across hard browser reloads.",
+      "It acts as a replacement for standard React Context."
+    ],
+    correctAnswer: 1,
+    explanation: "`useDeferredValue` lets you defer updating a part of the UI that is computationally heavy so user interactions remain fluid."
+  },
+  {
+    id: 3,
+    question: "In Machine Learning, what technique prevents a deep neural network from overfitting by randomly setting a fraction of input units to 0 at each update?",
+    category: "Artificial Intelligence",
+    options: [
+      "Batch Normalization",
+      "Gradient Clipping",
+      "Dropout Regularization",
+      "Quantization"
+    ],
+    correctAnswer: 2,
+    explanation: "Dropout randomly deactivates a fraction of neurons during training, forcing the network to learn redundant and robust representations."
+  },
+  {
+    id: 4,
+    question: "In SQL querying, which clause is specifically used to filter groups created by the `GROUP BY` clause?",
+    category: "Data Analytics",
+    options: [
+      "WHERE",
+      "HAVING",
+      "FILTER",
+      "ORDER BY"
+    ],
+    correctAnswer: 1,
+    explanation: "`HAVING` filters aggregated groups, whereas `WHERE` filters individual rows prior to grouping."
+  },
+  {
+    id: 5,
+    question: "In Cloud Architecture, what does 'RTO' stand for in disaster recovery planning?",
+    category: "Cloud Computing",
+    options: [
+      "Recovery Time Objective",
+      "Redundant Transfer Operations",
+      "Real Time Optimization",
+      "Resource Tracking Orchestration"
+    ],
+    correctAnswer: 0,
+    explanation: "Recovery Time Objective (RTO) is the maximum acceptable duration of time that an application can remain offline after a disaster."
+  }
 ];

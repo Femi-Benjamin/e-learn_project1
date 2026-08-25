@@ -1,404 +1,515 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { useAuth } from '../context/AuthContext';
+import { 
+  LayoutDashboard, 
+  BookOpen, 
+  Users, 
+  DollarSign, 
+  Video, 
+  Plus, 
+  Trash2, 
+  Edit3, 
+  Search, 
+  LogOut, 
+  Sparkles, 
+  CheckCircle2, 
+  TrendingUp, 
+  X,
+  Award,
+  Layers,
+  ArrowUpRight,
+  ShieldCheck
+} from 'lucide-react';
 
-const AdminDashboard = () => {
-    const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('dashboard');
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [showAllUsers, setShowAllUsers] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+export const AdminDashboard = () => {
+  const { 
+    coursesList, 
+    addCourse, 
+    updateCourse, 
+    deleteCourse, 
+    logoutAdmin,
+    showToast 
+  } = useAuth();
+  
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('courses'); // 'courses' | 'students' | 'live' | 'analytics'
+  const [courseSearch, setCourseSearch] = useState('');
+  
+  // Course Modal state (Create / Edit)
+  const [isCourseModalOpen, setIsCourseModalOpen] = useState(false);
+  const [editingCourseId, setEditingCourseId] = useState(null);
+  const [courseFormData, setCourseFormData] = useState({
+    title: '',
+    category: 'Development',
+    level: 'Beginner',
+    duration: '8 Weeks',
+    price: 79.99,
+    originalPrice: 129.99,
+    description: '',
+    badge: 'Popular',
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80',
+    instructorName: 'Elena Rostova',
+    instructorRole: 'Senior Staff Engineer'
+  });
 
-    useEffect(() => {
-        const isLoggedIn = localStorage.getItem('isAdminLoggedIn');
-        if (!isLoggedIn) {
-            navigate('/admin/login');
-        }
-    }, [navigate]);
+  // Mock Students Roster
+  const [students, setStudents] = useState([
+    { id: 1, name: "Alex Morgan", email: "alex.morgan@student.edu", course: "Cyber Security & Ethical Hacking", progress: 85, status: "Active", joined: "Aug 12, 2026" },
+    { id: 2, name: "Sarah Connor", email: "s.connor@defense.org", course: "Full-Stack Web Engineering", progress: 92, status: "Active", joined: "Aug 18, 2026" },
+    { id: 3, name: "Marcus Vance Jr.", email: "marcus.jr@vance.io", course: "Applied Machine Learning", progress: 100, status: "Certified", joined: "Jul 24, 2026" },
+    { id: 4, name: "Chloe Dupont", email: "chloe@designlabs.co", course: "Modern UI/UX Design Systems", progress: 64, status: "Active", joined: "Aug 20, 2026" },
+    { id: 5, name: "Tariq Mansoor", email: "tariq@cloudsys.net", course: "Cloud Solutions Architecture", progress: 48, status: "Active", joined: "Aug 22, 2026" }
+  ]);
 
-    const handleLogout = () => {
-        localStorage.removeItem('isAdminLoggedIn');
-        navigate('/admin/login');
+  const handleLogout = () => {
+    logoutAdmin();
+    navigate('/admin/login');
+  };
+
+  const handleOpenAddCourse = () => {
+    setEditingCourseId(null);
+    setCourseFormData({
+      title: '',
+      category: 'Development',
+      level: 'Beginner',
+      duration: '8 Weeks',
+      price: 79.99,
+      originalPrice: 129.99,
+      description: '',
+      badge: 'New',
+      image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80',
+      instructorName: 'Sarah Jenkins',
+      instructorRole: 'Lead Instructor'
+    });
+    setIsCourseModalOpen(true);
+  };
+
+  const handleOpenEditCourse = (course) => {
+    setEditingCourseId(course.id);
+    setCourseFormData({
+      title: course.title,
+      category: course.category,
+      level: course.level || 'Beginner',
+      duration: course.duration || '8 Weeks',
+      price: course.price || 79.99,
+      originalPrice: course.originalPrice || 129.99,
+      description: course.description || '',
+      badge: course.badge || '',
+      image: course.image,
+      instructorName: course.instructor?.name || 'Staff Instructor',
+      instructorRole: course.instructor?.role || 'Instructor'
+    });
+    setIsCourseModalOpen(true);
+  };
+
+  const handleSaveCourse = (e) => {
+    e.preventDefault();
+    if (!courseFormData.title.trim()) {
+      showToast("Please provide a course title", "error");
+      return;
+    }
+
+    const payload = {
+      title: courseFormData.title,
+      category: courseFormData.category,
+      level: courseFormData.level,
+      duration: courseFormData.duration,
+      price: parseFloat(courseFormData.price) || 79.99,
+      originalPrice: parseFloat(courseFormData.originalPrice) || 129.99,
+      description: courseFormData.description,
+      badge: courseFormData.badge,
+      image: courseFormData.image,
+      instructor: {
+        name: courseFormData.instructorName,
+        role: courseFormData.instructorRole,
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
+      }
     };
 
-    // Mock Data
-    const stats = [
-        { title: "Total Users", value: "1,234", change: "+12%", color: "bg-blue-500", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
-        { title: "Active Courses", value: "25", change: "+5%", color: "bg-green-500", icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" },
-        { title: "Total Revenue", value: "$45,678", change: "+8%", color: "bg-purple-500", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
-        { title: "Pending Payments", value: "15", change: "-2%", color: "bg-yellow-500", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
-    ];
+    if (editingCourseId) {
+      updateCourse(editingCourseId, payload);
+    } else {
+      addCourse(payload);
+    }
 
-    const allUsers = [
-        { id: 1, name: "John Doe", email: "john@example.com", course: "Cyber Security", status: "Paid", date: "2023-12-15", phone: "+1 234 567 890", address: "123 Tech Street, Silicon Valley, CA" },
-        { id: 2, name: "Jane Smith", email: "jane@example.com", course: "Business Management", status: "Pending", date: "2023-12-14", phone: "+1 987 654 321", address: "456 Biz Ave, New York, NY" },
-        { id: 3, name: "Robert Johnson", email: "robert@example.com", course: "Data Analytics", status: "Paid", date: "2023-12-13", phone: "+1 555 123 456", address: "789 Data Dr, Austin, TX" },
-        { id: 4, name: "Emily Davis", email: "emily@example.com", course: "Web Development", status: "Paid", date: "2023-12-12", phone: "+1 444 777 888", address: "321 Web Way, San Francisco, CA" },
-        { id: 5, name: "Michael Wilson", email: "michael@example.com", course: "Cyber Security", status: "Pending", date: "2023-12-11", phone: "+1 222 333 444", address: "654 Secure Ln, Washington, DC" },
-        { id: 6, name: "Sarah Brown", email: "sarah@example.com", course: "Digital Marketing", status: "Paid", date: "2023-12-10", phone: "+1 111 222 333", address: "987 Market St, Chicago, IL" },
-        { id: 7, name: "David Lee", email: "david@example.com", course: "Machine Learning", status: "Paid", date: "2023-12-09", phone: "+1 999 888 777", address: "159 AI Blvd, Boston, MA" },
-        { id: 8, name: "Lisa Taylor", email: "lisa@example.com", course: "Graphic Design", status: "Pending", date: "2023-12-08", phone: "+1 777 666 555", address: "753 Design Ct, Seattle, WA" },
-        { id: 9, name: "James Anderson", email: "james@example.com", course: "Cloud Computing", status: "Paid", date: "2023-12-07", phone: "+1 333 444 555", address: "951 Cloud Rd, Denver, CO" },
-        { id: 10, name: "Patricia Thomas", email: "patricia@example.com", course: "Web Development", status: "Paid", date: "2023-12-06", phone: "+1 666 555 444", address: "357 Code Ln, Portland, OR" },
-        { id: 11, name: "Christopher Martinez", email: "chris@example.com", course: "Data Analytics", status: "Pending", date: "2023-12-05", phone: "+1 222 888 555", address: "852 Data Way, Miami, FL" },
-        { id: 12, name: "Jennifer White", email: "jennifer@example.com", course: "Business Management", status: "Paid", date: "2023-12-04", phone: "+1 444 999 111", address: "147 Biz Blvd, Atlanta, GA" },
-    ];
+    setIsCourseModalOpen(false);
+  };
 
-    const displayedUsers = showAllUsers || activeTab === 'users' ? allUsers : allUsers.slice(0, 5);
+  const filteredCourses = coursesList.filter(c => 
+    c.title.toLowerCase().includes(courseSearch.toLowerCase()) ||
+    c.category.toLowerCase().includes(courseSearch.toLowerCase())
+  );
 
-    const coursesList = [
-        { id: 1, title: "Cyber Security", students: 120, revenue: "$12,000", status: "Active" },
-        { id: 2, title: "Web Development", students: 250, revenue: "$25,000", status: "Active" },
-        { id: 3, title: "Data Analytics", students: 80, revenue: "$8,000", status: "Active" },
-        { id: 4, title: "Digital Marketing", students: 150, revenue: "$15,000", status: "Active" },
-        { id: 5, title: "Business Management", students: 90, revenue: "$9,000", status: "Active" },
-    ];
+  return (
+    <div className="bg-slate-900 min-h-screen text-slate-100 font-sans flex flex-col justify-between">
+      <Navbar />
 
-    const renderDashboard = () => (
-        <>
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {stats.map((stat, index) => (
-                    <div key={index} className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 transition-transform hover:scale-105 duration-300">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-gray-500 text-sm font-medium uppercase">{stat.title}</h3>
-                            <span className={`p-2 rounded-lg ${stat.color} bg-opacity-10 text-${stat.color.split('-')[1]}-600`}>
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={stat.icon}></path></svg>
-                            </span>
-                        </div>
-                        <div className="flex items-baseline">
-                            <span className="text-2xl font-bold text-gray-900">{stat.value}</span>
-                            <span className={`ml-2 text-sm font-medium ${stat.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>{stat.change}</span>
-                        </div>
-                    </div>
-                ))}
+      {/* Admin Top Command Header */}
+      <div className="bg-slate-950 border-b border-slate-800 px-4 sm:px-6 lg:px-8 py-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+              <LayoutDashboard className="w-6 h-6" />
             </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="font-heading font-extrabold text-xl sm:text-2xl text-white tracking-tight">
+                  EduPulse Admin Center
+                </h1>
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                  Live Production
+                </span>
+              </div>
+              <p className="text-xs text-slate-400">Manage curriculum, live broadcasts, enrollment metrics & certification</p>
+            </div>
+          </div>
 
-            {/* Recent Registrations Table */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-                    <h3 className="text-lg font-bold text-gray-800">Recent Registrations</h3>
-                    <button onClick={() => setActiveTab('users')} className="text-primary hover:text-blue-800 text-sm font-medium">View All</button>
-                </div>
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left text-gray-500">
-                        <thead className="bg-gray-50 text-xs uppercase text-gray-700">
-                            <tr>
-                                <th className="px-6 py-4">User</th>
-                                <th className="px-6 py-4">Course</th>
-                                <th className="px-6 py-4">Date</th>
-                                <th className="px-6 py-4">Status</th>
-                                <th className="px-6 py-4">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {displayedUsers.map((user) => (
-                                <tr key={user.id} className="border-b hover:bg-gray-50 transition-colors">
-                                    <td className="px-6 py-4 flex items-center">
-                                        <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3 text-xs font-bold text-gray-600">
-                                            {user.name.charAt(0)}
-                                        </div>
-                                        <div>
-                                            <div className="font-medium text-gray-900">{user.name}</div>
-                                            <div className="text-xs">{user.email}</div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4">{user.course}</td>
-                                    <td className="px-6 py-4">{user.date}</td>
-                                    <td className="px-6 py-4">
-                                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${user.status === 'Paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                                            {user.status}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <button onClick={() => setSelectedUser(user)} className="text-blue-600 hover:text-blue-900 font-medium text-sm">View Details</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </>
-    );
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleOpenAddCourse}
+              id="admin-create-course-btn"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-600/25 transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Create New Course</span>
+            </button>
 
-    const renderUsers = () => (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-            <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-                <h3 className="text-xl font-bold text-gray-800">All Users</h3>
-                <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">Add New User</button>
-            </div>
-            <div className="overflow-x-auto">
-                <table className="w-full text-left text-gray-500">
-                    <thead className="bg-gray-50 text-xs uppercase text-gray-700">
-                        <tr>
-                            <th className="px-6 py-4">ID</th>
-                            <th className="px-6 py-4">User</th>
-                            <th className="px-6 py-4">Course</th>
-                            <th className="px-6 py-4">Date</th>
-                            <th className="px-6 py-4">Status</th>
-                            <th className="px-6 py-4">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {allUsers.map((user) => (
-                            <tr key={user.id} className="border-b hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4">#{user.id}</td>
-                                <td className="px-6 py-4 flex items-center">
-                                    <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3 text-xs font-bold text-gray-600">
-                                        {user.name.charAt(0)}
-                                    </div>
-                                    <div>
-                                        <div className="font-medium text-gray-900">{user.name}</div>
-                                        <div className="text-xs">{user.email}</div>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4">{user.course}</td>
-                                <td className="px-6 py-4">{user.date}</td>
-                                <td className="px-6 py-4">
-                                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${user.status === 'Paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                                        {user.status}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <button onClick={() => setSelectedUser(user)} className="text-blue-600 hover:text-blue-900 font-medium text-sm mr-3">Details</button>
-                                    <button className="text-red-600 hover:text-red-900 font-medium text-sm">Delete</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-rose-950/60 text-slate-300 hover:text-rose-400 border border-slate-800 transition-colors text-xs font-bold"
+            >
+              <LogOut className="w-4 h-4" />
+              <span>Sign Out</span>
+            </button>
+          </div>
         </div>
-    );
+      </div>
 
-    const renderCourses = () => (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-            <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-                <h3 className="text-xl font-bold text-gray-800">Course Management</h3>
-                <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700 transition-colors">Add New Course</button>
+      {/* Main Admin Content Container */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1 space-y-8">
+        
+        {/* KPI Metrics Ribbon */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <div className="p-5 rounded-3xl bg-slate-950 border border-slate-800 space-y-2">
+            <div className="flex items-center justify-between text-slate-400 text-xs">
+              <span>Gross Platform Revenue</span>
+              <DollarSign className="w-4 h-4 text-emerald-400" />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-                {coursesList.map((course) => (
-                    <div key={course.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                        <div className="flex justify-between items-start mb-4">
-                            <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                            </div>
-                            <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">{course.status}</span>
-                        </div>
-                        <h4 className="text-lg font-bold text-gray-900 mb-2">{course.title}</h4>
-                        <div className="flex justify-between text-sm text-gray-500 mb-4">
-                            <span>{course.students} Students</span>
-                            <span>{course.revenue} Rev</span>
-                        </div>
-                        <div className="flex space-x-2">
-                            <button className="flex-1 bg-gray-100 text-gray-700 py-2 rounded hover:bg-gray-200 text-sm font-medium">Edit</button>
-                            <button className="flex-1 bg-red-50 text-red-600 py-2 rounded hover:bg-red-100 text-sm font-medium">Archive</button>
-                        </div>
-                    </div>
-                ))}
+            <p className="text-2xl sm:text-3xl font-heading font-extrabold text-white">$148,290</p>
+            <span className="text-[11px] text-emerald-400 font-bold flex items-center gap-1">
+              <TrendingUp className="w-3 h-3" /> +18.4% this month
+            </span>
+          </div>
+
+          <div className="p-5 rounded-3xl bg-slate-950 border border-slate-800 space-y-2">
+            <div className="flex items-center justify-between text-slate-400 text-xs">
+              <span>Total Active Learners</span>
+              <Users className="w-4 h-4 text-blue-400" />
             </div>
+            <p className="text-2xl sm:text-3xl font-heading font-extrabold text-white">54,820</p>
+            <span className="text-[11px] text-blue-400 font-bold">840 newly enrolled</span>
+          </div>
+
+          <div className="p-5 rounded-3xl bg-slate-950 border border-slate-800 space-y-2">
+            <div className="flex items-center justify-between text-slate-400 text-xs">
+              <span>Published Courses</span>
+              <BookOpen className="w-4 h-4 text-purple-400" />
+            </div>
+            <p className="text-2xl sm:text-3xl font-heading font-extrabold text-white">{coursesList.length}</p>
+            <span className="text-[11px] text-purple-400 font-bold">100% cloud synced</span>
+          </div>
+
+          <div className="p-5 rounded-3xl bg-slate-950 border border-slate-800 space-y-2">
+            <div className="flex items-center justify-between text-slate-400 text-xs">
+              <span>Assessment Pass Rate</span>
+              <Award className="w-4 h-4 text-amber-400" />
+            </div>
+            <p className="text-2xl sm:text-3xl font-heading font-extrabold text-white">94.8%</p>
+            <span className="text-[11px] text-amber-400 font-bold">1,420 certificates issued</span>
+          </div>
+
         </div>
-    );
 
-    const renderAnalytics = () => (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">Revenue Growth</h3>
-                <div className="h-64 flex items-end justify-between space-x-2">
-                    {[40, 60, 45, 70, 85, 65, 90].map((h, i) => (
-                        <div key={i} className="w-full bg-blue-100 rounded-t-lg relative group">
-                            <div style={{ height: `${h}%` }} className="absolute bottom-0 w-full bg-blue-500 rounded-t-lg transition-all duration-500 group-hover:bg-blue-600"></div>
-                            <div className="absolute -bottom-6 w-full text-center text-xs text-gray-500">Mon</div>
-                        </div>
-                    ))}
-                </div>
+        {/* Admin Workspace Tabs */}
+        <div className="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden">
+          
+          {/* Tabs Bar */}
+          <div className="p-4 bg-slate-900 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setActiveTab('courses')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeTab === 'courses' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Course Catalog ({coursesList.length})
+              </button>
+
+              <button
+                onClick={() => setActiveTab('students')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeTab === 'students' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Students Roster ({students.length})
+              </button>
             </div>
-            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">User Demographics</h3>
-                <div className="space-y-4">
-                    <div>
-                        <div className="flex justify-between text-sm mb-1">
-                            <span className="text-gray-700">Students</span>
-                            <span className="text-gray-900 font-medium">75%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5">
-                            <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '75%' }}></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="flex justify-between text-sm mb-1">
-                            <span className="text-gray-700">Professionals</span>
-                            <span className="text-gray-900 font-medium">15%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5">
-                            <div className="bg-green-500 h-2.5 rounded-full" style={{ width: '15%' }}></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="flex justify-between text-sm mb-1">
-                            <span className="text-gray-700">Others</span>
-                            <span className="text-gray-900 font-medium">10%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2.5">
-                            <div className="bg-yellow-400 h-2.5 rounded-full" style={{ width: '10%' }}></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
 
-    const renderSettings = () => (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 max-w-2xl mx-auto">
-            <div className="p-6 border-b border-gray-100">
-                <h3 className="text-xl font-bold text-gray-800">Admin Profile Settings</h3>
-            </div>
-            <div className="p-6 space-y-6">
-                <div className="flex items-center space-x-6">
-                    <img className="w-20 h-20 rounded-full border-4 border-gray-100" src="https://ui-avatars.com/api/?name=Admin+User&background=0D8ABC&color=fff&size=128" alt="Admin" />
-                    <button className="text-primary hover:text-blue-800 font-medium">Change Avatar</button>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                        <input type="text" defaultValue="Admin" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                        <input type="text" defaultValue="User" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
-                    </div>
-                    <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                        <input type="email" defaultValue="admin@example.com" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
-                    </div>
-                    <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
-                        <input type="password" placeholder="Leave blank to keep current" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
-                    </div>
-                </div>
-                <div className="pt-4 flex justify-end">
-                    <button className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition-colors">Save Changes</button>
-                </div>
-            </div>
-        </div>
-    );
-
-    return (
-        <div className="flex h-screen bg-gray-100 font-sans">
-            {/* Sidebar */}
-            <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-primary text-white transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out`}>
-                <div className="p-6 flex justify-between items-center">
-                    <h1 className="text-2xl font-bold font-heading">Admin Panel</h1>
-                    <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-white">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
-                </div>
-                <nav className="mt-6">
-                    {['dashboard', 'users', 'courses', 'analytics', 'settings'].map((tab) => (
-                        <button
-                            key={tab}
-                            onClick={() => { setActiveTab(tab); setIsSidebarOpen(false); }}
-                            className={`w-full text-left block py-3 px-6 transition-colors border-l-4 ${activeTab === tab ? 'bg-blue-800 border-white' : 'border-transparent hover:bg-blue-800 hover:border-blue-400'}`}
-                        >
-                            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                        </button>
-                    ))}
-                </nav>
-                <div className="absolute bottom-0 w-64 p-6">
-                    <button onClick={handleLogout} className="flex items-center text-blue-200 hover:text-white w-full text-left transition-colors">
-                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                        Logout
-                    </button>
-                </div>
-            </aside>
-
-            {/* Main Content */}
-            <main className="flex-1 md:ml-64 overflow-y-auto">
-                <div className="p-8">
-                    {/* Header */}
-                    <div className="flex justify-between items-center mb-8">
-                        <div className="flex items-center">
-                            <button onClick={() => setIsSidebarOpen(true)} className="mr-4 md:hidden text-gray-600">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                            </button>
-                            <h2 className="text-3xl font-bold text-gray-800">{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h2>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <div className="relative">
-                                <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
-                                <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                            </div>
-                            <img className="w-10 h-10 rounded-full border-2 border-gray-200" src="https://ui-avatars.com/api/?name=Admin+User&background=0D8ABC&color=fff" alt="Admin" />
-                        </div>
-                    </div>
-
-                    {/* Content Area */}
-                    {activeTab === 'dashboard' && renderDashboard()}
-                    {activeTab === 'users' && renderUsers()}
-                    {activeTab === 'courses' && renderCourses()}
-                    {activeTab === 'analytics' && renderAnalytics()}
-                    {activeTab === 'settings' && renderSettings()}
-                </div>
-            </main>
-
-            {/* User Details Modal */}
-            {selectedUser && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden transform transition-all scale-100">
-                        <div className="bg-primary p-6 text-white flex justify-between items-start">
-                            <div>
-                                <h3 className="text-2xl font-bold">{selectedUser.name}</h3>
-                                <p className="text-blue-200 text-sm">{selectedUser.email}</p>
-                            </div>
-                            <button onClick={() => setSelectedUser(null)} className="text-white hover:text-gray-200">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                            </button>
-                        </div>
-                        <div className="p-6 space-y-4">
-                            <div className="flex items-center space-x-3 text-gray-700">
-                                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                <div>
-                                    <p className="text-xs text-gray-500 uppercase">Course</p>
-                                    <p className="font-medium">{selectedUser.course}</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center space-x-3 text-gray-700">
-                                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                                <div>
-                                    <p className="text-xs text-gray-500 uppercase">Phone</p>
-                                    <p className="font-medium">{selectedUser.phone}</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center space-x-3 text-gray-700">
-                                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                <div>
-                                    <p className="text-xs text-gray-500 uppercase">Address</p>
-                                    <p className="font-medium">{selectedUser.address}</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center space-x-3 text-gray-700">
-                                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                <div>
-                                    <p className="text-xs text-gray-500 uppercase">Registration Date</p>
-                                    <p className="font-medium">{selectedUser.date}</p>
-                                </div>
-                            </div>
-                            <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
-                                <span className={`px-3 py-1 rounded-full text-sm font-medium ${selectedUser.status === 'Paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                                    {selectedUser.status}
-                                </span>
-                                <div className="space-x-2">
-                                    <button className="text-gray-500 hover:text-gray-700 text-sm font-medium">Edit Profile</button>
-                                    <button className="text-red-500 hover:text-red-700 text-sm font-medium">Suspend</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            {activeTab === 'courses' && (
+              <div className="relative">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Filter courses..."
+                  value={courseSearch}
+                  onChange={(e) => setCourseSearch(e.target.value)}
+                  className="pl-9 pr-3 py-1.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
             )}
+          </div>
+
+          {/* TAB 1: Courses Management Table */}
+          {activeTab === 'courses' && (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs text-slate-300">
+                <thead className="bg-slate-900/60 text-slate-400 font-bold uppercase tracking-wider border-b border-slate-800 text-[10px]">
+                  <tr>
+                    <th className="py-3.5 px-6">Course</th>
+                    <th className="py-3.5 px-4">Category</th>
+                    <th className="py-3.5 px-4">Price</th>
+                    <th className="py-3.5 px-4">Instructor</th>
+                    <th className="py-3.5 px-4">Rating</th>
+                    <th className="py-3.5 px-6 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/80">
+                  {filteredCourses.map((course) => (
+                    <tr key={course.id} className="hover:bg-slate-900/40 transition-colors">
+                      <td className="py-4 px-6">
+                        <div className="flex items-center gap-3">
+                          <img src={course.image} alt={course.title} className="w-10 h-10 rounded-xl object-cover ring-1 ring-slate-700 shrink-0" />
+                          <div>
+                            <p className="font-bold text-white leading-tight">{course.title}</p>
+                            <p className="text-[10px] text-slate-500">{course.duration} • {course.level}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-medium">
+                          {course.category}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 font-bold text-white font-mono">
+                        ${course.price}
+                      </td>
+                      <td className="py-4 px-4 text-slate-300 font-medium">
+                        {course.instructor?.name || 'Staff'}
+                      </td>
+                      <td className="py-4 px-4 text-amber-400 font-bold">
+                        ★ {course.rating ? course.rating.toFixed(1) : "5.0"}
+                      </td>
+                      <td className="py-4 px-6 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => handleOpenEditCourse(course)}
+                            className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-blue-300 transition-colors"
+                            aria-label={`Edit ${course.title}`}
+                          >
+                            <Edit3 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => deleteCourse(course.id)}
+                            className="p-1.5 rounded-lg bg-slate-800 hover:bg-rose-950/80 text-rose-400 transition-colors"
+                            aria-label={`Delete ${course.title}`}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* TAB 2: Students Roster */}
+          {activeTab === 'students' && (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs text-slate-300">
+                <thead className="bg-slate-900/60 text-slate-400 font-bold uppercase tracking-wider border-b border-slate-800 text-[10px]">
+                  <tr>
+                    <th className="py-3.5 px-6">Student</th>
+                    <th className="py-3.5 px-4">Enrolled Track</th>
+                    <th className="py-3.5 px-4">Curriculum Progress</th>
+                    <th className="py-3.5 px-4">Status</th>
+                    <th className="py-3.5 px-6 text-right">Joined Date</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/80">
+                  {students.map((st) => (
+                    <tr key={st.id} className="hover:bg-slate-900/40 transition-colors">
+                      <td className="py-4 px-6">
+                        <div>
+                          <p className="font-bold text-white">{st.name}</p>
+                          <p className="text-[10px] text-slate-500 font-mono">{st.email}</p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 text-slate-200 font-medium">
+                        {st.course}
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="w-32 bg-slate-800 rounded-full h-2 overflow-hidden">
+                          <div className="bg-blue-500 h-full rounded-full" style={{ width: `${st.progress}%` }} />
+                        </div>
+                        <span className="text-[10px] text-slate-400 font-mono mt-1 block">{st.progress}% Complete</span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                          st.status === 'Certified' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-blue-500/20 text-blue-400'
+                        }`}>
+                          {st.status}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6 text-right font-mono text-slate-400">
+                        {st.joined}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
         </div>
-    );
+
+      </main>
+
+      {/* Add / Edit Course Modal */}
+      {isCourseModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+          <div className="relative w-full max-w-xl bg-slate-900 rounded-3xl border border-slate-800 p-6 space-y-5 text-slate-100 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <h3 className="font-heading font-bold text-lg text-white">
+                {editingCourseId ? "Edit Course Information" : "Create New Course Track"}
+              </h3>
+              <button
+                onClick={() => setIsCourseModalOpen(false)}
+                className="p-1.5 rounded-xl text-slate-400 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveCourse} className="space-y-4 text-xs">
+              <div className="space-y-1">
+                <label className="font-bold text-slate-300">Course Title *</label>
+                <input
+                  type="text"
+                  required
+                  value={courseFormData.title}
+                  onChange={(e) => setCourseFormData({ ...courseFormData, title: e.target.value })}
+                  placeholder="e.g. Distributed Systems Engineering"
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="font-bold text-slate-300">Category</label>
+                  <select
+                    value={courseFormData.category}
+                    onChange={(e) => setCourseFormData({ ...courseFormData, category: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none"
+                  >
+                    <option value="Security">Security</option>
+                    <option value="Development">Development</option>
+                    <option value="AI">AI</option>
+                    <option value="Data">Data</option>
+                    <option value="Cloud">Cloud</option>
+                    <option value="Design">Design</option>
+                    <option value="Business">Business</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="font-bold text-slate-300">Target Level</label>
+                  <select
+                    value={courseFormData.level}
+                    onChange={(e) => setCourseFormData({ ...courseFormData, level: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none"
+                  >
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                    <option value="All Levels">All Levels</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="font-bold text-slate-300">Price ($ USD)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={courseFormData.price}
+                    onChange={(e) => setCourseFormData({ ...courseFormData, price: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="font-bold text-slate-300">Duration</label>
+                  <input
+                    type="text"
+                    value={courseFormData.duration}
+                    onChange={(e) => setCourseFormData({ ...courseFormData, duration: e.target.value })}
+                    placeholder="e.g. 10 Weeks"
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-slate-300">Course Description</label>
+                <textarea
+                  rows={3}
+                  value={courseFormData.description}
+                  onChange={(e) => setCourseFormData({ ...courseFormData, description: e.target.value })}
+                  placeholder="Summary of skills learned..."
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none resize-none"
+                />
+              </div>
+
+              <div className="pt-2 flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsCourseModalOpen(false)}
+                  className="px-4 py-2 rounded-xl text-slate-400 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold shadow-md shadow-blue-500/20"
+                >
+                  {editingCourseId ? "Update Course" : "Publish Course"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      <Footer />
+    </div>
+  );
 };
 
 export default AdminDashboard;

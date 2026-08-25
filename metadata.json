@@ -1,0 +1,6 @@
+{
+  "name": "EduPulse",
+  "description": "Next-generation interactive e-learning platform with live classrooms, recorded masterclasses, skill assessment certification, and admin management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

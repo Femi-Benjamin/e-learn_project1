@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="eduPulseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1d4ed8" />
+      <stop offset="50%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+  </defs>
+  <!-- Squircle rounded background -->
+  <rect width="48" height="48" rx="14" fill="url(#eduPulseGrad)" />
+  
+  <!-- Graduation Cap Icon -->
+  <!-- Top Mortarboard Diamond -->
+  <path d="M24 13L38 20L24 27L10 20L24 13Z" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Lower Skullcap Curve -->
+  <path d="M14 22.5V29C14 29 17.5 33 24 33C30.5 33 34 29 34 29V22.5" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Hanging Tassel Line -->
+  <path d="M38 20V29" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
